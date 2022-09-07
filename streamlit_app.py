@@ -25,8 +25,7 @@ st.dataframe(fruits_to_show)
 # new section for fruityvice advice
 st.header("Fruityvice Fruit Advice!")
 
-fruityvice_response = req.get("https://fruityvice.com/api/fruit/watermelon")
-st.text(fruityvice_response.json())
+fruityvice_response = req.get("https://fruityvice.com/api/fruit/" + "kiwi")
 
 # clean up json 
 fruityvice_normalized = pnd.json_normalize(fruityvice_response.json())
