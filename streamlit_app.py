@@ -27,3 +27,8 @@ st.header("Fruityvice Fruit Advice!")
 
 fruityvice_response = req.get("https://fruityvice.com/api/fruit/watermelon")
 st.text(fruityvice_response.json())
+
+# clean up json 
+fruityvice_normalized = pnd.json_normalize(fruityvice_response.json())
+# display
+st.dataframe(fruityvice_normalized)
