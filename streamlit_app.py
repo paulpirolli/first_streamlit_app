@@ -29,7 +29,7 @@ st.header("Fruityvice Fruit Advice!")
 
 try:
     fruit_choice = st.text_input('What fruit would you like information about?')
-    if not fruit_choice
+    if not fruit_choice:
         st.error("Please select a fruit to get information.")
     else:
         fruityvice_response = req.get("https://fruityvice.com/api/fruit/" + fruit_choice)
