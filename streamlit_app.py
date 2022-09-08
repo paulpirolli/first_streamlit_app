@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pnd
 import requests as req
 import snowflake.connector as snfkcn
+from urllib.error import URLError as err
 
 my_fruit_list = pnd.read_csv("https://uni-lab-files.s3.us-west-2.amazonaws.com/dabw/fruit_macros.txt")
 my_fruit_list = my_fruit_list.set_index('Fruit')
@@ -26,15 +27,18 @@ st.dataframe(fruits_to_show)
 # new section for fruityvice advice
 st.header("Fruityvice Fruit Advice!")
 
-fruit_choice = st.text_input('What fruit would you like information about?','Kiwi')
-st.write('The user entered ', fruit_choice)
-
-fruityvice_response = req.get("https://fruityvice.com/api/fruit/" + fruit_choice)
-
-# clean up json 
-fruityvice_normalized = pnd.json_normalize(fruityvice_response.json())
-# display
-st.dataframe(fruityvice_normalized)
+try:
+    fruit_choice = st.text_input('What fruit would you like information about?')
+    if not fruit_choice
+        st.error("Please select a fruit to get information.")
+    else:
+        fruityvice_response = req.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+        # clean up json 
+        fruityvice_normalized = pnd.json_normalize(fruityvice_response.json())
+        # display
+        st.dataframe(fruityvice_normalized)
+except err as e:
+    st.error()
 
 my_cnx = snfkcn.connect(**st.secrets["snowflake"])
 my_cur = my_cnx.cursor()
