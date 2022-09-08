@@ -27,16 +27,19 @@ st.dataframe(fruits_to_show)
 # new section for fruityvice advice
 st.header("Fruityvice Fruit Advice!")
 
+def get_fruityvice_data(this_fruit_choice):
+    fruityvice_response = req.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+    fruityvice_normalized = pnd.json_normalize(fruityvice_response.json())
+    return fruityvice_normalized
+
 try:
     fruit_choice = st.text_input('What fruit would you like information about?')
     if not fruit_choice:
         st.error("Please select a fruit to get information.")
     else:
-        fruityvice_response = req.get("https://fruityvice.com/api/fruit/" + fruit_choice)
-        # clean up json 
-        fruityvice_normalized = pnd.json_normalize(fruityvice_response.json())
+        back_from_fuction = get_fruityvice_data(fruit_choice)
         # display
-        st.dataframe(fruityvice_normalized)
+        st.dataframe(back_from_fuction)
 except err as e:
     st.error()
 
