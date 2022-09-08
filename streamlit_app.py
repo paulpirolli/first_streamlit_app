@@ -47,4 +47,4 @@ st.dataframe(my_data_rows)
 # new section for adding fruit
 
 add_my_fruit = st.text_input('What fruit would you like to add?','Jackfruit')
-st.write('The user entered ', fruit_choice)
+st.write('The user entered ', add_my_fruit)
